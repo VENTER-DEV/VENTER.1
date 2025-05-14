@@ -1,4 +1,4 @@
-name: Build Unity Android APK
+name: Build Unity Project
 
 on:
   push:
@@ -8,33 +8,24 @@ on:
 
 jobs:
   build:
-    name: Build Android
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Cache Unity
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/unity
-          key: UnityCache-${{ runner.os }}-${{ hashFiles('**/ProjectSettings/ProjectVersion.txt') }}
-          restore-keys: |
-            UnityCache-${{ runner.os }}-
-
       - name: Setup Unity
-        uses: game-ci/unity-actions/setup@v2
+        uses: game-ci/unity-actions@v2
         with:
           unityVersion: 2022.3.0f1
 
-      - name: Build APK
+      - name: Build project
         uses: game-ci/unity-builder@v2
         with:
           targetPlatform: Android
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
+      - name: Upload build
+        uses: actions/upload-artifact@v2
         with:
-          name: Android-APK
-          path: build/Android/*.apk
+          name: Build
+          path: build
