@@ -1,0 +1,21 @@
+name: Build Unity Android Game
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: game-ci/unity-builder@v3
+        with:
+          targetPlatform: Android
+          unityVersion: 2022.3.0f1
+      - uses: actions/upload-artifact@v3
+        with:
+          name: AndroidBuild
+          path: build/Android
